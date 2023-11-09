@@ -12,16 +12,15 @@
                      <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" aria-describedby="usernameHelp"
-                           v-model="name">
-                        <span>{{ username }}</span>
+                           v-model="user.name">
                      </div>
                      <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" v-model="email">
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" v-model="user.email">
                      </div>
                      <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" v-model="password">
+                        <input type="password" class="form-control" id="password" v-model="user.password">
                      </div>
                      <div class="mb-3">
                         <button type="submit" class="btn btn-primary">Signup</button>
@@ -35,20 +34,22 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive} from "vue";
 import axios from 'axios';
 
-const name = ref('john')
-const email = ref('john@gmail.com')
-const password = ref('password')
+// const name = ref('john')
+// const email = ref('john@gmail.com')
+// const password = ref('password')
+
+const user = reactive({
+   name: 'john',
+   email: 'john@gmail.com',
+   password: 'password'
+})
 
 const signup =  async () => {
    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/signup', {
-      name: name.value,
-      email: email.value,
-      password: password.value
-   });
+      const response = await axios.post('http://127.0.0.1:8000/api/signup', user);
    console.log(response);
    } catch (error) {
       console.log(error);
